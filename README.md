@@ -58,3 +58,12 @@ an unprivileged user. It tests rejection of pure host capture, native profile
 install and upgrade, symlinked library capture, immutable behavior after the host
 library changes/disappears, rollback, GC and removal. Native Nix itself and the
 fixture application are preinstalled; this is not an installer test.
+
+## Payload mode boundary
+
+This backend's native manager is Nix itself: native profiles necessarily use
+Nix's store, database and client. A Nix-free installation mode belongs to the
+adapter for the manager that will own those files (for example, dpkg or Flatpak),
+not to a second mode of Nix profiles. Bundling a client inside a captured-library
+wrapper would not provision a store or replace the profile manager. Providing
+Nix through an impure native package remains deferred installer work.
